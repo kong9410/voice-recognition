@@ -154,6 +154,7 @@ def listen_print_loop(responses):
             print(transcript + overwrite_chars)
             fw = open('voicetext.txt','a')
             fw.write(transcript + overwrite_chars)
+            fw.write(".")
             fw.close()
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
