@@ -4,3 +4,8 @@
 팀 명 : 담아전구  
 팀 장 : 공민철  
 팀 원 : 고민재, 박경민
+
+## 구글 Cloud 음성인식 API
+
+https://webnautes.tistory.com/1247 참조
+
