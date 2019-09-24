@@ -36,12 +36,14 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
-
+import time
+import json
+from collections import OrderedDict
 # Audio recording parameters
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
-
-
+dictnumber=0
+list=[]
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
     def __init__(self, rate, chunk):
@@ -149,12 +151,26 @@ def listen_print_loop(responses):
             sys.stdout.flush()
 
             num_chars_printed = len(transcript)
-
         else:
-            print(transcript + overwrite_chars)
-            fw = open('voicetext.txt','a')
-            fw.write(transcript + overwrite_chars)
-            fw.close()
+
+            speechtime = str(time.time())
+            print(speechtime+transcript + overwrite_chars)
+            data={
+                "time" : speechtime,
+                "text" : transcript+overwrite_chars
+            }
+            indata={
+                "indata":data
+            }
+            global list
+            list.append(indata)
+            print(list)
+            outdata={}
+            if transcript + overwrite_chars == " 종료" :
+                break
+            #fw = open('voicetext.txt','a')
+            #fw.write(str(time.time())+transcript + overwrite_chars+'\n')
+            #fw.close()
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r'\b(exit|quit)\b', transcript, re.I):
@@ -163,6 +179,11 @@ def listen_print_loop(responses):
 
             num_chars_printed = 0
 
+    outdata={
+        "data":list
+    }
+    with open('voicetext.json', 'w', encoding='UTF-8-sig') as file:
+        file.write(json.dumps(outdata, ensure_ascii=False))
 
 def main():
     # See http://g.co/cloud/speech/docs/languages
@@ -191,4 +212,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 # [END speech_transcribe_streaming_mic]
