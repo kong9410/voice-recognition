@@ -19,7 +19,7 @@ def run_quickstart():
     # [START speech_quickstart]
     import io
     import os
-
+    import time
     # Imports the Google Cloud client library
     # [START migration_import]
     from google.cloud import speech
@@ -53,6 +53,9 @@ def run_quickstart():
 
     for result in response.results:
         print('Transcript: {}'.format(result.alternatives[0].transcript))
+        fw=open('voicetext.txt','a')
+        fw.write(str(time.time())+result.alternatives[0].transcript+'.')
+        fw.close()
     # [END speech_quickstart]
 
 
