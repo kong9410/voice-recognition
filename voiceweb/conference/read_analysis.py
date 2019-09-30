@@ -34,6 +34,13 @@ class read_analysis:
         except:
             self.result = "요약이 안됨"
         return self.result
+    def data_keywords(self, number_of_keywords):
+        try:
+            ky = tr.TextRank(self.all_text)
+            self.key_result = ky.keywords(number_of_keywords)
+        except:
+            self.key_result = []
+        return self.result
 
 
 if __name__ == "__main__":
