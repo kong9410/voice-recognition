@@ -14,7 +14,10 @@ def conference_analysis(request):
     data = vj.fileopen(dirname, filenames[0])
     ra = ras.read_analysis(data)
     result = ra.data_summarize(4)
+    keywords = ra.data_keywords(10)
+    print(keywords)
     context = {
-        "summarize" : result
+        "summarize" : result,
+        "keywords" : keywords,
     }
     return render(request, 'vw/main.html', context=context)
