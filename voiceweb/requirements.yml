@@ -20,8 +20,8 @@ dependencies:
   - wheel=0.33.6=py36_0
   - wincertstore=0.2=py36_1002
   - pip:
-    - intel-openmp=2019.5=281
-    - mkl=2019.5=281
+    - intel-openmp
+    - mkl
     - joblib==0.13.2
     - konlpy==0.5.1
     - scikit-learn==0.21.3
