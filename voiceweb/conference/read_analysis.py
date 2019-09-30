@@ -40,7 +40,7 @@ class read_analysis:
             self.key_result = ky.keywords(number_of_keywords)
         except:
             self.key_result = []
-        return self.result
+        return self.key_result
 
 
 if __name__ == "__main__":
