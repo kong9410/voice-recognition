@@ -12,6 +12,5 @@ def voice_input_start(requset):
     name=0
     if requset.method == 'POST':
         name = requset.POST["name_field"]
-        print(name)
     transcribe_streaming_mic.main(name)
     return render(requset, 'vw/index.html')
