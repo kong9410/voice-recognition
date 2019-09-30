@@ -1,28 +1,16 @@
+{% load static %}
 <!DOCTYPE HTML>
 <html>
 
 <head>
     <title>회의록</title>
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
 </head>
-
 <body>
-    <input type="button" value="녹음시작">
-    <input type="file" value="녹음파일">
-    <p>핵심 내용</p>
-    {%for s in summarize %}
-    <p>{{s}}</p>
-    {% endfor %}
-    <p>많이 나온 키워드</p>
-    {%for k in keywords %}
-    <input type="button" name="{{k}}" value="{{k}}">
-    {%endfor%}
-    <p>회의 내용</p>
-    <div>
-
-        A : 안녕하세요<br>
-        B : 안녕하세요<br>
-        C : 반갑습니다<br>
-    </div>
+    <form class="signUp" id="signupForm">
+       <h1 class="signUpTitle"><b>Meeting Login</b></h1>
+       <input type="text" class="signUpInput" placeholder="아이디" autofocus required>
+       <input type="submit" value="Login"" class="signUpButton">
+    </form>
 </body>
-
 </html>
