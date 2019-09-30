@@ -5,12 +5,10 @@ channels:
 dependencies:
   - certifi=2019.9.11=py36_0
   - django=2.2.5=py36_0
-  - intel-openmp=2019.5=281
   - jpype1=0.7=py36h79cbd7a_0
   - libblas=3.8.0=8_mkl
   - libcblas=3.8.0=8_mkl
   - liblapack=3.8.0=8_mkl
-  - mkl=2019.5=281
   - numpy=1.17.2=py36hc71023c_0
   - pip=19.2.3=py36_0
   - python=3.6.7=he025d50_1005
@@ -22,9 +20,12 @@ dependencies:
   - wheel=0.33.6=py36_0
   - wincertstore=0.2=py36_1002
   - pip:
+    - intel-openmp=2019.5=281
+    - mkl=2019.5=281
     - joblib==0.13.2
     - konlpy==0.5.1
     - scikit-learn==0.21.3
     - scipy==1.3.1
     - sklearn==0.0
 prefix: C:\Users\gnits\Anaconda3\envs\voiceenv
+
