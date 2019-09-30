@@ -1,11 +1,16 @@
+{% load static %}
 <!DOCTYPE HTML>
 <html>
 
 <head>
+    <title>회의록</title>
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
 </head>
-
 <body>
-
+    <form class="signUp" id="signupForm">
+       <h1 class="signUpTitle"><b>Meeting Login</b></h1>
+       <input type="text" class="signUpInput" placeholder="아이디" autofocus required>
+       <input type="submit" value="Login"" class="signUpButton">
+    </form>
 </body>
-
 </html>

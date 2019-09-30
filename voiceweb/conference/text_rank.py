@@ -12,7 +12,7 @@ class SentenceTokenizer(object):
         self.twitter = Okt()
         self.stopwords = ['중인' ,'만큼', '마찬가지', '꼬집었', "아", "휴", "아이구", 
         "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가"
-        ,"어제", "오늘", "내일", "그것", "저것", "이것"]
+        ,"어제", "오늘", "내일", "그것", "저것", "이것", "이번"]
     def url2sentences(self, url):
         article = Article(url, language='ko')
         article.download()

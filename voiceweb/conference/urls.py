@@ -17,6 +17,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('analysis', views.conference_analysis, name='main'),
     path('', views.index, name='index'),
     path('api/name', views.voice_input_start, name='api_name'),
 ]

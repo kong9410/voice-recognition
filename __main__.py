@@ -3,6 +3,7 @@
 import text_rank as tr
 #import transcribe_streaming_mic as tsm
 import os
+import json
 
 class voice_json:
     def search(dirname):
@@ -10,8 +11,28 @@ class voice_json:
         return filenames
     def fileopen(dirname, filename):
         with open(dirname + filename, 'r', encoding='utf8') as f:
-            data = f.read()
+            data = json.load(f)
             return data
+
+class read_analysis:
+    def __init__(self, data):
+        ler = int(len(data['data']))
+        self.all_text = ""
+        for elem in data['data']:
+            time = elem['indata']['time']
+            text = elem['indata']['text'].strip()
+            self.all_text = self.all_text + " " + text
+        self.all_text = self.all_text.strip()
+        self.result = "None"
+    def get_text(self):
+        return self.all_text
+    def data_summarize(self, number_of_summarize):
+        try:
+            rank = tr.TextRank(self.all_text)
+            self.result = rank.summarize(number_of_summarize)
+        except:
+            self.result = "요약이 안됨"
+        return self.result
 
 
 if __name__ == "__main__":
@@ -20,8 +41,9 @@ if __name__ == "__main__":
     dirname = "./src/text/"
     filenames = vj.search(dirname)
     print(filenames[0])
+    data = vj.fileopen(dirname, filenames[0])
+    ra = read_analysis(data)
+    result = ra.data_summarize(0)
+    print(result)
 
-    text = filenames[0]
-    rank = tr.TextRank(text)
-    print(rank.summarize(2))
-    #with open(dirname+)
+    
