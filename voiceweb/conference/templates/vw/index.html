@@ -5,7 +5,12 @@
 </head>
 
 <body>
-
+<form action="api/name" method="POST">
+    {% csrf_token %}
+    ID<br>
+    <input id="id" type="text" name="name_field" value="your name"><br>
+    <input type ="submit"  value="login">
+</form>
 </body>
 
 </html>
