@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import text_rank as tr
+from . import text_rank as tr
 #import transcribe_streaming_mic as tsm
 import os
 import json
 
 class voice_json:
     def search(dirname):
+        print(os.listdir('.'))
         filenames = os.listdir(dirname)
         return filenames
     def fileopen(dirname, filename):
@@ -38,7 +39,7 @@ class read_analysis:
 if __name__ == "__main__":
     # 파일 불러오기
     vj = voice_json
-    dirname = "./src/text/"
+    dirname = ".conference/src/text/"
     filenames = vj.search(dirname)
     print(filenames[0])
     data = vj.fileopen(dirname, filenames[0])

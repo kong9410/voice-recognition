@@ -2,10 +2,29 @@
 <html>
 
 <head>
+    <title>회의록</title>
 </head>
 
 <body>
-
+    <input type="button" value="녹음시작">
+<input type="file" value="녹음파일">
+    <p>핵심 내용</p>
+    {%for s in summarize %}
+    <p>{{s}}</p>
+    {% endfor %}
+<p>많이 나온 키워드</p>
+<input type="button" name="keyword1" value="키워드1">
+<input type="button" name="keyword1" value="키워드2">
+<input type="button" name="keyword1" value="키워드3">
+<input type="button" name="keyword1" value="키워드4">
+<input type="button" name="keyword1" value="키워드5">
+<p>회의 내용</p>
+<div>
+    
+    A : 안녕하세요<br>
+    B : 안녕하세요<br>
+    C : 반갑습니다<br>
+</div>
 </body>
 
 </html>
