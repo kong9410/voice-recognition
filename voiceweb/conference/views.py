@@ -2,6 +2,7 @@ from django.shortcuts import render
 # import text_rank
 from . import read_analysis as ras
 import os
+import json
 from . import transcribe_streaming_mic
 # Create your views here.
 
@@ -34,9 +35,21 @@ def index(request):
 
 
 def voice_input_start(requset):
-    #name을 index에서 입력받아서 넘겨줘야함
     name=0
     if requset.method == 'POST':
         name = requset.POST["name_field"]
     transcribe_streaming_mic.main(name)
-    return render(requset, 'vw/index.html')
+    with open('voicetext.json', encoding="UTF-8-sig") as json_file:
+        json_data = json.load(json_file)
+        json_name = json_data["name"]
+        json_time=[]
+        json_text=[]
+
+        for j in json_data["data"] :
+         json_time.append(json_name)
+         json_time.append(j["indata"]["time"])
+         json_time.append(j["indata"]["text"])
+        context = {
+            "data" : json_time
+        }
+    return render(requset, 'vw/resultpage.html', context)
