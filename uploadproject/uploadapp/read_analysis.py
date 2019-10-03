@@ -29,12 +29,13 @@ class read_analysis:
                     self.speech_list.append({'name':json_data["name"], "time":j["indata"]["time"],
                                 "text":j["indata"]["text"],'state':"default",'percent':0})
         self.speech_list = sorted(self.speech_list, key=lambda k: k["time"])
+
         return self.speech_list
 
     def all_text_merge(self):
         for s in self.speech_list:
             self.all_text += (" " + s["text"].strip())
-    
+
     def get_text(self):
         return self.all_text
 
@@ -66,7 +67,7 @@ class read_analysis:
 #     result = ra.data_summarize(0)
 #     print(result)
 
-    
+
 if __name__ == "__main__":
     ras = read_analysis()
     # dirname = 'C:\\workspace\\voice_recognition\\uploadproject\\media\\2019-10-03\\'

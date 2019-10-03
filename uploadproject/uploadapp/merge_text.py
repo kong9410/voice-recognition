@@ -6,6 +6,7 @@ def sum_json_file():
     json_name = []
     json_time = []
     json_text = []
+    global list
     list=[]
     for filename in glob.glob("voicetext*.json"):
      with open(filename, encoding="UTF-8-sig") as json_file:
