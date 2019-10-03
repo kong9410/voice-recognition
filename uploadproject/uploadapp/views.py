@@ -21,3 +21,22 @@ def load(request):
     
 def result(request):
     return render(request, 'result.html')
+
+
+def login_ok(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        print(name)
+    
+    return render(request, 'login_ok.html')
+
+def content(request):
+    sentimental_analysis()
+    return render(request, 'content.html')
+
+
+def detail_analysis(request):
+    return render(request, 'detail_analysis.html')
+
+def main(request):
+    return render(request, 'main.html')

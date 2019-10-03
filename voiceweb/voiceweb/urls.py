@@ -20,8 +20,5 @@ from conference import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('record', include('conference.urls')),
-    path('',views.main),
-    path('login_ok',views.login_ok),
-    path('content',views.content),
-    path('detail_analysis',views.detail_analysis),
+
 ]
