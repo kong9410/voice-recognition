@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from . import text_rank as tr
+import text_rank as tr
 #import transcribe_streaming_mic as tsm
 import os
 import json
@@ -27,14 +27,14 @@ class read_analysis:
                 json_data = json.load(json_file)
                 for j in json_data["data"] :
                     self.speech_list.append({'name':json_data["name"], "time":j["indata"]["time"],
-                                "text":j["indata"]["text"],'state':"default",'percent':0})
+                                "text":j["indata"]["text"]})
         self.speech_list = sorted(self.speech_list, key=lambda k: k["time"])
         return self.speech_list
 
     def all_text_merge(self):
         for s in self.speech_list:
             self.all_text += (" " + s["text"].strip())
-    
+
     def get_text(self):
         return self.all_text
 
