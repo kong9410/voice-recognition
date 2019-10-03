@@ -3,6 +3,27 @@ from .forms import UploadFileForm
 from .models import UploadFileModel
 # Create your views here.
 
+# 감성 분석 모델 관련 패키지##########
+from tensorflow.keras import models
+from tensorflow.keras.models import load_model
+import json
+import os
+from pprint import pprint
+from konlpy.tag import Okt
+import numpy as np
+import nltk
+####################################
+############전역변수#################
+model = load_model('sentimental/meeting_mlp_model.h5')
+
+if os.path.isfile('sentimental/train_docs.json'):
+        with open('sentimental/train_docs.json', encoding='utf-8') as f:
+            train_docs = json.load(f)
+okt = Okt()
+selected_words=[]
+#####################################
+
+
 def index(request):
     return render(request, 'index.html')
     
