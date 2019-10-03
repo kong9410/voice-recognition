@@ -7,7 +7,11 @@ from pprint import pprint
 from konlpy.tag import Okt
 import numpy as np
 import nltk
+import read_analysis
 ############전역변수#######################
+
+ras = read_analysis()
+
 model = load_model('sentimental/meeting_mlp_model.h5')
 
 if os.path.isfile('sentimental/train_docs.json'):
