@@ -1,6 +1,9 @@
 from django.shortcuts import render
 # import text_rank
 from . import read_analysis as ras
+import os
+import glob
+import json
 from . import transcribe_streaming_mic
 
 # 감성 분석 모델 관련 패키지##########
@@ -133,3 +136,17 @@ def sentimental_analysis():
 
 
 ################# 감성 분석 모델 관련 함수##################
+
+def sum_json_file(request):
+    json_name = []
+    json_time = []
+    json_text = []
+    list=[]
+    for filename in glob.glob("voicetext*.json"):
+     with open(filename, encoding="UTF-8-sig") as json_file:
+        json_data = json.load(json_file)
+        for j in json_data["data"] :
+         list.append({'name':json_data["name"], "time":j["indata"]["time"],
+                      "text":j["indata"]["text"]})
+    list= sorted(list,key=lambda k:k["time"])
+    print(list)
