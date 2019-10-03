@@ -94,7 +94,11 @@
 				<div class="cd-project-info">
 					<p>
 						&nbsp
-						<button type="button" class="btn btn-primary btn-lg btn-block"><h1><b>음성파일 등록</b></h1></button>
+						<form action="api/load" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
+							<input multiple class="btn btn-primary btn-lg btn-block" type="file" name="files">
+							<input type="submit" class="btn btn-primary btn-lg btn-block" value="음성파일 등록">
+						</form>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
