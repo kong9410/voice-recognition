@@ -37,3 +37,6 @@ def voice_input_start(requset):
         print(name)
     transcribe_streaming_mic.main(name)
     return render(requset, 'vw/index.html')
+
+def upload(request):
+    return render(request, 'vw/upload.html')

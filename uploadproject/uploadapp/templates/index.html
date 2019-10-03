@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>업로드</title>
+</head>
+
+<body>
+    <form method="POST" action="api/load" enctype="multipart/form-data" nonvalidate>
+        {% csrf_token %}
+        <input multiple='multiple' type="file" name="files">
+        <input type="submit">
+    </form>
+</body>
+
+</html>

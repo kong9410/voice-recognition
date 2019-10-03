@@ -1,5 +1,0 @@
-*만들기
-conda create env -f requirements.yml
-
-*추출
-conda env export > requirements.yml
