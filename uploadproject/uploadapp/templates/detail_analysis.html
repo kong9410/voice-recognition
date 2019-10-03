@@ -1,15 +1,27 @@
 {% load static %}
-<!doctype html>
-<html lang="en" class="no-js">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
+	<link rel="stylesheet" href="{% static 'css/analysis.css' %}"> <!-- Resource style -->
+		
+	<link rel="author" href="https://plus.google.com/113101541449927918834"/>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 	<title>Conference</title>
+
 </head>
+
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<ul class="navbar-nav">
@@ -21,5 +33,175 @@
 			</li>
 		</ul>
 	</nav>
+
+	<!-- 발화 횟수 차트-->
+	<div id="box1">
+		<div id="box11">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-dark"><h4><b>Speech Count</b></h4></li>
+			</ul>
+			<canvas id="myChart"></canvas>
+		</div>
+		<div id="box12">
+			<table class="table table-dark table-hover">
+				<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Digit</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td><h2>회의시간</h2></td>
+					<td><span class="counter" style="width: 20%; color: #fff;">87</span></td>
+				</tr>
+				<tr>
+					<td><h2>총 발화 횟수</h2></td>
+					<td><span class="counter" style="width: 20%; color: #fff;">234</span></td>
+				</tr>
+				<tr>
+					<td><h2>회의 참여자</h2></td>
+					<td><span class="counter" style="width: 20%; color: #fff;">3</span></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<div id="box2">
+		<div id="box21">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-dark"><h4><b>감성 분석</b></h4></li>
+			</ul>
+			<canvas id="pie-chart"></canvas>
+		</div>
+		<div id="box22">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-dark"><h4><b>빈번한 단어</b></h4></li>
+			</ul>
+			<canvas id="bar-chart-horizontal"></canvas>
+		</div>
+	</div>
+
+	<div id="box3">
+		<ul class="list-group">
+			<li class="list-group-item list-group-item-light"><h4>Text Rank</h4></li>
+		</ul>
+		<table class="table table-dark table-hover">
+			<thead>
+				<tr>
+					<th><h2></h2></th>
+					<th><h2>문장</h2></th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td><h2>1</h2></td>
+				<td>1.추가 필터를 사용하여 str을 int로 강제 변환 할 수 있습니다.</td>
+			</tr>
+			<tr>
+				<td><h2>2</h2></td>
+				<td>2.이해식 대변인은 논평을 통해 "광화문 광장에서는 온갖 가짜뉴스와 공허한 정치선동만이 난무했다"고 밝혔다.</td>
+			</tr>
+			<tr>
+				<td><h2>3</h2></td>
+				<td>이어 "한국당이 전국적 총동원령을 내려 만든 집회, 우리공화당의 태극기 집회, 수구적 종교정치 세력의 창당준비집회가 뒤섞여 정체성과 주장에 혼돈만이 가득했다"고도 했다.</td>
+			</tr>
+			<tr>
+				<td><h2>4</h2></td>
+				<td>박찬대 원내대변인은 "한국당의 막말과 선동정치는 폭력만 양산할 뿐"이라며 "(집회가) 국민 분열을 넘어 폭력시위로까지 번지고 있어 대단히 우려스럽다"고 말했다.</td>
+			</tr>
+			<tr>
+				<td><h2>5</h2></td>
+				<td>전재수 의원은 페이스북에 '자유수호 국가원로회 호외'라는 글을 공유하며 "이것을 보면 한국당 집회가 어떤 집회인지 알 수 있다"고 썼다.</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
 </body>
+	<script>
+	// 우선 컨텍스트를 가져옵니다. 
+	new Chart(document.getElementById("myChart"), {
+		type: 'bar',
+		data: {
+		labels: ["경민", "민재", "민철"],
+		datasets: [
+			{
+			label: "발화 횟수",
+			backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+			data: [2478,5267,734]
+			}
+		]
+		},
+		options: {
+			legend: { display: false },
+			title:{
+				display:true,
+				text:'Number of ignition'
+			}
+		}
+	});
+	</script>
+
+
+
+	<script>
+	new Chart(document.getElementById("pie-chart"), {
+		type: 'pie',
+		data: {
+		labels: ["부정", "중립", "긍정"],
+		datasets: [{
+			label: "감성 분석",
+			backgroundColor: ["#FF0000", "#99E000","#3cba9f"],
+			data: [2478,5267,734]
+		}]
+		},
+		options: {
+			title: {
+				display: true,
+				text: 'Emotional Analysis Results'
+			}
+		}
+	});
+	</script>
+
+	<script>
+		new Chart(document.getElementById("bar-chart-horizontal"), {
+			type: 'horizontalBar',
+			data: {
+			labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+			datasets: [
+				{
+				label: "Frequent Word List",
+				backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+				data: [2478,5267,734,784,433]
+				}
+			]
+			},
+			options: {
+				legend: { display: false },
+				title: {
+					display: true,
+					text: 'Frequent Word List'
+				}
+			}
+		});
+	</script>
+
+
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		jQuery(document).ready(function( $ ) {
+			$('.counter').counterUp({
+				delay: 10,
+				time: 1000
+			});
+		});
+	</script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<script src="{% static 'js/jquery.counterUp.min.js' %}"></script>
 </html>

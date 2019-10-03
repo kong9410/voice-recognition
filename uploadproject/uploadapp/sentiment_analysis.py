@@ -24,8 +24,6 @@ def tokenize(doc):
     return ['/'.join(t) for t in okt.pos(doc, norm=True, stem=True)]
 
 
-
-
 def term_frequency(doc):
     global selected_words
     return [doc.count(word) for word in selected_words]
