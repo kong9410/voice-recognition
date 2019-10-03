@@ -183,7 +183,8 @@ def listen_print_loop(responses,name):
         "name":name,
         "data":list
     }
-    with open("voicetext.json", 'w', encoding='UTF-8-sig') as file:
+    file_name="voicetext"+name+".json"
+    with open(file_name, 'w', encoding='UTF-8-sig') as file:
         file.write(json.dumps(outdata, ensure_ascii=False))
 
 def main(name):
