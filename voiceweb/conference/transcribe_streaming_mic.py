@@ -183,14 +183,16 @@ def listen_print_loop(responses,name):
         "name":name,
         "data":list
     }
-    with open("voicetext.json", 'w', encoding='UTF-8-sig') as file:
+    file_name="voicetext"+name+".json"
+    with open(file_name, 'w', encoding='UTF-8-sig') as file:
         file.write(json.dumps(outdata, ensure_ascii=False))
 
 def main(name):
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
     language_code = 'ko-KR'  # a BCP-47 language tag
-
+    global list
+    list=[]
     client = speech.SpeechClient()
     config = types.RecognitionConfig(
         encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
