@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
+	<link rel="stylesheet" href="{% static 'css/analysis.css' %}"> <!-- Resource style -->
+		
+	<link rel="author" href="https://plus.google.com/113101541449927918834"/>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+	<title>Conference</title>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<ul class="navbar-nav">
+			<li class="nav-item active">
+			<a class="nav-link" href="login_ok">홈</a>
+			</li>
+			<li class="nav-item active">
+			<a class="nav-link" href="content">회의 내용 분석</a>
+			</li>
+		</ul>
+	</nav>
+
+	<!-- 발화 횟수 차트-->
+	<div id="box1">
+		<div id="box11">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-dark"><h4><b>Speech Count</b></h4></li>
+			</ul>
+			<canvas id="myChart"></canvas>
+		</div>
+		<div id="box12">
+			<table class="table table-dark table-hover">
+				<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Digit</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td><h2>회의시간</h2></td>
+					<td><span class="counter" style="width: 20%; color: #fff;">{{speech_time}}</span></td>
+				</tr>
+				<tr>
+					<td><h2>총 발화 횟수</h2></td>
+					<td><span class="counter" style="width: 20%; color: #fff;">{{total_talk}}</span></td>
+				</tr>
+				<tr>
+					<td><h2>회의 참여자</h2></td>
+					<td><span class="counter" style="width: 20%; color: #fff;">{{number_of_participants}}</span></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<div id="box2">
+		<div id="box21">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-dark"><h4><b>감성 분석</b></h4></li>
+			</ul>
+			<canvas id="pie-chart"></canvas>
+		</div>
+		<div id="box22">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-dark"><h4><b>빈번한 단어</b></h4></li>
+			</ul>
+			<canvas id="bar-chart-horizontal"></canvas>
+		</div>
+	</div>
+
+	<div id="box3">
+		<ul class="list-group">
+			<li class="list-group-item list-group-item-light"><h4>Text Rank</h4></li>
+		</ul>
+		<table class="table table-dark table-hover">
+			<thead>
+				<tr>
+					<th><h2></h2></th>
+					<th><h2>문장</h2></th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for summ in summarize_text %}
+			<tr>
+				<td>1</td>
+				<td>{{ summ }}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+</body>
+	<script>
+	// 우선 컨텍스트를 가져옵니다. 
+	new Chart(document.getElementById("myChart"), {
+		type: 'bar',
+		data: {
+		labels: [
+			{% for t in talker_list %}
+				"{{t}}",
+			{% endfor %}
+		],
+		datasets: [
+			{
+			label: "발화 횟수",
+			backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+			data: [
+				{% for n in number_of_talker %}
+					{{n}},
+				{% endfor %}
+				]
+			}
+		]
+		},
+		options: {
+			legend: { display: false },
+			title:{
+				display:true,
+				text:'Number of ignition'
+			},
+			scales:{
+					yAxes:[{
+					ticks:{
+						min:0,
+						beginAtZero:true
+					}
+					}]
+				}
+		}
+	});
+	</script>
+
+
+
+	<script>
+	new Chart(document.getElementById("pie-chart"), {
+		type: 'pie',
+		data: {
+		labels: ["부정", "중립", "긍정"],
+		datasets: [{
+			label: "감성 분석",
+			backgroundColor: ["#FF0000", "#99E000","#3cba9f"],
+			data: [
+				{% for n in number_of_sentimental %}
+					{{n}},
+				{% endfor %}
+				]
+		}]
+		},
+		options: {
+			title: {
+				display: true,
+				text: 'Emotional Analysis Results'
+			}
+		}
+	});
+	</script>
+
+	<script>
+		new Chart(document.getElementById("bar-chart-horizontal"), {
+			type: 'horizontalBar',
+			data: {
+			labels: [
+				{% for k in import_keywords %}
+					"{{k}}",
+				{% endfor %}
+			],
+			datasets: [
+				{
+				label: "Frequent Word List",
+				backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+				data: [
+					{% for n in number_of_keywords %}
+						{{n}},
+					{% endfor %}
+				]
+				}
+			]
+			},
+			options: {
+				legend: { display: false },
+				title: {
+					display: true,
+					text: 'Frequent Word List'
+				},
+				scales:{
+					xAxes:[{
+					ticks:{
+						min:0,
+						beginAtZero:true
+					}
+					}]
+				}
+
+			}
+		});
+	</script>
+
+
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		jQuery(document).ready(function( $ ) {
+			$('.counter').counterUp({
+				delay: 10,
+				time: 1000
+			});
+		});
+	</script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<script src="{% static 'js/jquery.counterUp.min.js' %}"></script>
+</html>

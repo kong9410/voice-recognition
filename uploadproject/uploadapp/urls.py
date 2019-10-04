@@ -4,9 +4,13 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    #path('', views.index, name='index'),
     path('api/load', views.load, name='load'),
     path('result', views.result, name='result'),
+    path('',views.main),
+    path('login_ok',views.login_ok),
+    path('content',views.content),
+    path('detail_analysis',views.detail_analysis),
 ]
 
 if settings.DEBUG:
