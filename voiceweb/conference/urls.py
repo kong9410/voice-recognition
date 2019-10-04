@@ -17,8 +17,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.main, name='main'),
-    path('api/name', views.voice_input_start, name='api_name'),
-    path('uploads', views.upload, name='upload'),
-    path('login_ok', views.login_ok, name='login_ok'),
+    path('', views.main),
+    path('api/name',views.voice_input_start)
+    #path('api/name', views.voice_input_start, name='api_name'),
+    #path('uploads', views.upload, name='upload'),
+   # path('login_ok', views.login_ok, name='login_ok'),
 ]

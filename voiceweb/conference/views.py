@@ -12,13 +12,14 @@ import os
 # Create your views here.
 
 # Create your views here.
+def main(request):
+    return render(request, 'vw/index.html')
 
-
-def conference_analysis(request):
-    context={
-        "summarize":"test",
-        "keywords":"test",
-    }
+#def conference_analysis(request):
+#    context={
+#        "summarize":"test",
+#        "keywords":"test",
+ #   }
     # vj = ras.voice_json
     # dirname = "./conference/src/text/"
     # filenames = vj.search(dirname)
@@ -31,12 +32,11 @@ def conference_analysis(request):
     #     "summarize" : result,
     #     "keywords" : keywords,
     # }
-    return render(request, 'vw/main.html', context=context)
+ #   return render(request, 'vw/main.html', context=context)
 
 
-def record(request):
-    return render(request, 'vw/index.html')
-
+#def record(request):
+#    return render(request, 'vw/index.html')
 
 def voice_input_start(requset):
     name=0
@@ -45,5 +45,5 @@ def voice_input_start(requset):
     transcribe_streaming_mic.main(name)
     return render(requset, 'vw/index.html')
 
-def upload(request):
-    return render(request, 'vw/upload.html')
+#def upload(request):
+#    return render(request, 'vw/upload.html')
