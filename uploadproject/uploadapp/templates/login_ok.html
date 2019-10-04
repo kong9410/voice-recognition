@@ -71,11 +71,11 @@
 
 				<div class="cd-project-info">
 					<p>
-						<br>프로젝트 주제 : 음성인식을 활용한 회의 분석,정리 시스템</br>
-						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
-						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
-						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
-						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
+						<br>Project Subject : 음성인식을 활용한 회의 분석,정리 시스템</br>
+						<br>using API : Google Cloud Platform(Speech to Text)</br>
+						<br>Server : Django</br>
+						<br>language : python, html, css, js</br>
+						<br>Scnario :    </br>
 						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
 						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
 						<br>음성인식을 활용한 회의 분석,정리 시스템</br>
@@ -94,7 +94,11 @@
 				<div class="cd-project-info">
 					<p>
 						&nbsp
-						<button type="button" class="btn btn-primary btn-lg btn-block"><h1><b>음성파일 등록</b></h1></button>
+						<form method="POST" action="api/load" enctype="multipart/form-data">
+							{% csrf_token %}
+							<input type="file" multiple class="btn btn-primary btn-lg btn-block" name="files" value="음성파일 등록">
+							<input type="submit" class="btn btn-primary btn-lg btn-block" value="제출">
+						</form>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
