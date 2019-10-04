@@ -38,6 +38,7 @@ import pyaudio
 from six.moves import queue
 import time
 import json
+from datetime import datetime
 from collections import OrderedDict
 # Audio recording parameters
 RATE = 16000
@@ -152,9 +153,10 @@ def listen_print_loop(responses,name):
 
             num_chars_printed = len(transcript)
         else:
+            now = datetime.now()
+            speechtime = int(datetime.today().strftime("%H%M%S"))
 
-            speechtime = str(time.time())
-            print(speechtime+transcript + overwrite_chars)
+            print(str(speechtime) + transcript + overwrite_chars)
             data={
                 "time" : speechtime,
                 "text" : transcript+overwrite_chars
@@ -168,17 +170,12 @@ def listen_print_loop(responses,name):
             outdata={}
             if transcript + overwrite_chars == " 종료" :
                 break
-            #fw = open('voicetext.txt','a')
-            #fw.write(str(time.time())+transcript + overwrite_chars+'\n')
-            #fw.close()
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r'\b(exit|quit)\b', transcript, re.I):
                 print('Exiting..')
                 break
-
             num_chars_printed = 0
-
     outdata={
         "name":name,
         "data":list

@@ -49,12 +49,11 @@ def conference_analysis(request):
     #     "summarize" : result,
     #     "keywords" : keywords,
     # }
-    return render(request, 'vw/main.html', context=context)
+ #   return render(request, 'vw/main.html', context=context)
 
 
-def record(request):
-    return render(request, 'vw/index.html')
-
+#def record(request):
+#    return render(request, 'vw/index.html')
 
 def voice_input_start(requset):
     name=0
@@ -150,3 +149,4 @@ def sum_json_file(request):
                       "text":j["indata"]["text"]})
     list= sorted(list,key=lambda k:k["time"])
     print(list)
+
