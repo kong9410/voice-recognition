@@ -11,6 +11,8 @@ https://webnautes.tistory.com/1247 참조
 
 ## 실행법
 
+윈도우 환경에서 작성되었습니다.
+
 1. 아나콘다3 파이썬이 설치되어 있어야합니다.
 
 2. `conda env create -f environment.yml` 명령어로 가상환경을 설치합니다
