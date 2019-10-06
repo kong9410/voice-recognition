@@ -75,3 +75,5 @@ class sentiment:
 
     def get_list(self):
         return self.list
+
+    

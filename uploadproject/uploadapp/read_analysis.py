@@ -44,7 +44,7 @@ class read_analysis:
             rank = tr.TextRank(self.all_text)
             self.result = rank.summarize(number_of_summarize)
         except:
-            self.result = "요약이 안됨"
+            self.result = "cannot summarization"
         return self.result
 
     def data_keywords(self, number_of_keywords):
@@ -54,24 +54,3 @@ class read_analysis:
         except:
             self.key_result = []
         return self.key_result
-
-
-# if __name__ == "__main__":
-#     # 파일 불러오기
-#     vj = voice_json
-#     dirname = ".conference/src/text/"
-#     filenames = vj.search(dirname)
-#     print(filenames[0])
-#     data = vj.fileopen(dirname, filenames[0])
-#     ra = read_analysis(data)
-#     result = ra.data_summarize(0)
-#     print(result)
-
-
-if __name__ == "__main__":
-    ras = read_analysis()
-    # dirname = 'C:\\workspace\\voice_recognition\\uploadproject\\media\\2019-10-03\\'
-    dirname = '..\\media\\2019-10-03\\'
-    print(ras.sum_json_file(dirname = dirname))
-    ras.all_text_merge()
-    print(ras.get_text())

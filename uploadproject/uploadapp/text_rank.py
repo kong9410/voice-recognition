@@ -1,4 +1,7 @@
 
+# 코드 출처
+# https://excelsior-cjh.tistory.com/93
+
 from konlpy.tag import Kkma
 from konlpy.tag import Okt
 from sklearn.feature_extraction.text import TfidfVectorizer

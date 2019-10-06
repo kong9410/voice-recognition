@@ -56,16 +56,20 @@ def login_ok(request):
     return render(request, 'login_ok.html')
 
 def content(request):
-    sentimental_analysis()
-    print(list)
-    """
-    context={
-        "data" : list,
-        "loop_times" : range(0,len(list)),
-    }
-    """
+        # 오늘 날짜로 폴더 찾기
+    now = datetime.now()
+    digital_month = str(now.month)
+    if(now.month < 10):
+        digital_month = "0"+digital_month
+    digital_day = str(now.day)
+    if(now.day < 10):
+        digital_day = "0"+digital_day
+    dirname = "media\\"+str(now.year)+"-"+digital_month+"-"+digital_day+"\\"
 
-    return render(request, 'content.html',{"list":list})
+    sas = stm.sentiment()
+    sas.sentimental_analysis(dirname)
+    content_list = sas.get_list()
+    return render(request, 'content.html',{"list":content_list})
 
 
 def detail_analysis(request):
@@ -149,104 +153,104 @@ def main(request):
 
 
 
-# 감성 분석 모델 관련 패키지##########
-from tensorflow.keras import models
-from tensorflow.keras.models import load_model
-import json
-import os
-from pprint import pprint
-from konlpy.tag import Okt
-import numpy as np
-import nltk
-from . import read_analysis
-############전역변수#######################
+# # 감성 분석 모델 관련 패키지##########
+# from tensorflow.keras import models
+# from tensorflow.keras.models import load_model
+# import json
+# import os
+# from pprint import pprint
+# from konlpy.tag import Okt
+# import numpy as np
+# import nltk
+# from . import read_analysis
+# ############전역변수#######################
 
 
-model = load_model('sentimental/meeting_mlp_model.h5')
+# model = load_model('sentimental/meeting_mlp_model.h5')
 
-if os.path.isfile('sentimental/train_docs.json'):
-        with open('sentimental/train_docs.json', encoding='utf-8') as f:
-            train_docs = json.load(f)
-okt = Okt()
-selected_words=[]
-###################################
-################# 감성 분석 모델 관련 함수##################
+# if os.path.isfile('sentimental/train_docs.json'):
+#         with open('sentimental/train_docs.json', encoding='utf-8') as f:
+#             train_docs = json.load(f)
+# okt = Okt()
+# selected_words=[]
+# ###################################
+# ################# 감성 분석 모델 관련 함수##################
 
-def tokenize(doc):
-    global okt
-    # norm은 정규화, stem은 근어로 표시하기를 나타냄
-    return ['/'.join(t) for t in okt.pos(doc, norm=True, stem=True)]
+# def tokenize(doc):
+#     global okt
+#     # norm은 정규화, stem은 근어로 표시하기를 나타냄
+#     return ['/'.join(t) for t in okt.pos(doc, norm=True, stem=True)]
 
-def term_frequency(doc):
-    global selected_words
-    return [doc.count(word) for word in selected_words]
+# def term_frequency(doc):
+#     global selected_words
+#     return [doc.count(word) for word in selected_words]
 
-def predict_pos_neg(opinion):
-    global okt
-    global selected_words
-    token = tokenize(opinion)
-    tf = term_frequency(token)
-    data = np.expand_dims(np.asarray(tf).astype('float32'), axis=0)
-    global model
-    score = model.predict(data)
-    max_index=0
-    max_value=-1
-    index=0
-    state=""
-    for prob in score[0]:
-        if max_value< prob:
-            max_value=prob
-            max_index=index
-        index+=1
-    if max_index==0:
-        print("[{}]는 {:.2f}% 확률로 부정 리뷰이지 않을까 추측해봅니다.^^\n".format(opinion, max_value * 100))
-        state="부정"
-    elif max_index==1:
-        print("[{}]는 {:.2f}% 확률로 중립 리뷰이지 않을까 추측해봅니다.^^\n".format(opinion, max_value * 100))
-        state="중립"
-    elif max_index==2:
-        print("[{}]는 {:.2f}% 확률로 긍정 리뷰이지 않을까 추측해봅니다.^^\n".format(opinion, max_value * 100))
-        state="긍정"
-    return state, int(max_value*100)
-def sentimental_analysis():
-    global model
-    global train_docs
-    global okt
-    global selected_words
-    model = load_model('sentimental/meeting_mlp_model.h5') # 감성 분석 모델
-    if os.path.isfile('sentimental/train_docs.json'):
-        with open('sentimental/train_docs.json', encoding='utf-8') as f:
-            train_docs = json.load(f)
-    ras=read_analysis.read_analysis()
-    dirname = 'media\\2019-10-03\\'
-    global list
-    list= ras.sum_json_file(dirname=dirname)
-    ras.all_text_merge()
-    text=ras.get_text()
+# def predict_pos_neg(opinion):
+#     global okt
+#     global selected_words
+#     token = tokenize(opinion)
+#     tf = term_frequency(token)
+#     data = np.expand_dims(np.asarray(tf).astype('float32'), axis=0)
+#     global model
+#     score = model.predict(data)
+#     max_index=0
+#     max_value=-1
+#     index=0
+#     state=""
+#     for prob in score[0]:
+#         if max_value< prob:
+#             max_value=prob
+#             max_index=index
+#         index+=1
+#     if max_index==0:
+#         print("[{}]는 {:.2f}% 확률로 부정 리뷰이지 않을까 추측해봅니다.^^\n".format(opinion, max_value * 100))
+#         state="부정"
+#     elif max_index==1:
+#         print("[{}]는 {:.2f}% 확률로 중립 리뷰이지 않을까 추측해봅니다.^^\n".format(opinion, max_value * 100))
+#         state="중립"
+#     elif max_index==2:
+#         print("[{}]는 {:.2f}% 확률로 긍정 리뷰이지 않을까 추측해봅니다.^^\n".format(opinion, max_value * 100))
+#         state="긍정"
+#     return state, int(max_value*100)
+# def sentimental_analysis():
+#     global model
+#     global train_docs
+#     global okt
+#     global selected_words
+#     model = load_model('sentimental/meeting_mlp_model.h5') # 감성 분석 모델
+#     if os.path.isfile('sentimental/train_docs.json'):
+#         with open('sentimental/train_docs.json', encoding='utf-8') as f:
+#             train_docs = json.load(f)
+#     ras=read_analysis.read_analysis()
+#     dirname = 'media\\2019-10-03\\'
+#     global list
+#     list= ras.sum_json_file(dirname=dirname)
+#     ras.all_text_merge()
+#     text=ras.get_text()
 
-    tokens = [t for d in train_docs for t in d[0]]
-    text = nltk.Text(tokens, name='NMSC')
-    selected_words = [f[0] for f in text.vocab().most_common(4500)]
-    for i in range(0,len(list)) :
-     a,b= predict_pos_neg(list[i]['text'])
-     list[i].update({'state':a,'percent':b})
-     print(list[i])
+#     tokens = [t for d in train_docs for t in d[0]]
+#     text = nltk.Text(tokens, name='NMSC')
+#     selected_words = [f[0] for f in text.vocab().most_common(4500)]
+#     for i in range(0,len(list)) :
+#      a,b= predict_pos_neg(list[i]['text'])
+#      list[i].update({'state':a,'percent':b})
+#      print(list[i])
 
-from konlpy.tag import Twitter
-from collections import Counter
+# from konlpy.tag import Twitter
+# from collections import Counter
 
-def get_tags(text, ntags=50):
-    spliter = Twitter()
-    # konlpy의 Twitter객체
-    nouns = spliter.nouns(text)
-    # nouns 함수를 통해서 text에서 명사만 분리/추출
-    count = Counter(nouns)
-    # Counter객체를 생성하고 참조변수 nouns할당
-    return_list = []  # 명사 빈도수 저장할 변수
-    for n, c in count.most_common(ntags):
-        temp = {'tag': n, 'count': c}
-        return_list.append(temp)
-    # most_common 메소드는 정수를 입력받아 객체 안의 명사중 빈도수
-    # 큰 명사부터 순서대로 입력받은 정수 갯수만큼 저장되어있는 객체 반환
-    # 명사와 사용된 갯수를 return_list에 저장합니다.
-    return return_list
+# def get_tags(text, ntags=50):
+#     spliter = Twitter()
+#     # konlpy의 Twitter객체
+#     nouns = spliter.nouns(text)
+#     # nouns 함수를 통해서 text에서 명사만 분리/추출
+#     count = Counter(nouns)
+#     # Counter객체를 생성하고 참조변수 nouns할당
+#     return_list = []  # 명사 빈도수 저장할 변수
+#     for n, c in count.most_common(ntags):
+#         temp = {'tag': n, 'count': c}
+#         return_list.append(temp)
+#     # most_common 메소드는 정수를 입력받아 객체 안의 명사중 빈도수
+#     # 큰 명사부터 순서대로 입력받은 정수 갯수만큼 저장되어있는 객체 반환
+#     # 명사와 사용된 갯수를 return_list에 저장합니다.
+#     return return_list
